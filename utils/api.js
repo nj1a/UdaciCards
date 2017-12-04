@@ -1,15 +1,35 @@
 import { AsyncStorage } from 'react-native'
 
+/**
+ * The AsyncStorage has the following schema:
+ * 
+ *  decks: {
+ *      [title]: {
+ *          title: string the name of this deck
+ *          questions: [string] ids of questions belonging to this deck
+ *      }
+ *  }, 
+ *  questions: {
+ *      [id]: {
+ *          id: string
+ *          question: string
+ *          answer: string
+ *      }
+ *  }
+ */
+
 const DECKS_ASYNC_STORAGE_KEY = 'UdaciCards:decks'
+const CARDS_ASYNC_STORAGE_KEY = 'UdaciCards:cards'
 
-export const getDecks = () => AsyncStorage.getItems(DECKS_ASYNC_STORAGE_KEY).then(JSON.parse)
+export const getDecks = () => AsyncStorage
+    .getItems(DECKS_ASYNC_STORAGE_KEY)
+    .then(response => { decks: JSON.parse(response) })
 
-export const getDeck = id => getDecks().then(decks => decks[id])
+export const addDeck = title => AsyncStorage
+    .mergeItems(DECKS_ASYNC_STORAGE_KEY, JSON.stringify({ [title]: { title: title, questions: [] } }))
+    .then(response => { decks: JSON.parse(response) })
 
-export const saveDeckTitle = title => AsyncStorage
-    .setItems(DECKS_ASYNC_STORAGE_KEY, JSON.stringify({ [title]: { title: title, questions: [] } }))
-    .then(getDeck(title))
-
-export const addCardToDeck = (title, card) => AsyncStorage
-    .mergeItems(DECKS_ASYNC_STORAGE_KEY, JSON.stringify({ [title]: { questions: [card] } }))
-    .then(getDeck(title))
+export const addQuestion = async (title, id, question, answer) => ({
+    decks: JSON.parse(await AsyncStorage.mergeItems(DECKS_ASYNC_STORAGE_KEY, JSON.stringify({ [title]: { questions: [id] } }))),
+    questions: JSON.parse(await AsyncStorage.mergeItems(CARDS_ASYNC_STORAGE_KEY, JSON.stringify({ [id]: { id, question, answer } }))),
+})
