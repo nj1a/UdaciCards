@@ -6,7 +6,6 @@ import { AsyncStorage } from 'react-native'
  *  decks: {
  *      [title]: {
  *          title: string the name of this deck
- *          questions: [string] ids of questions belonging to this deck
  *      }
  *  }, 
  *  questions: {
@@ -21,15 +20,18 @@ import { AsyncStorage } from 'react-native'
 const DECKS_ASYNC_STORAGE_KEY = 'UdaciCards:decks'
 const CARDS_ASYNC_STORAGE_KEY = 'UdaciCards:cards'
 
-export const getDecks = () => AsyncStorage
-    .getItems(DECKS_ASYNC_STORAGE_KEY)
-    .then(response => { decks: JSON.parse(response) })
+export const getDecks = () => AsyncStorage.getItem(DECKS_ASYNC_STORAGE_KEY).then(result => ({ decks: JSON.parse(result) || {} }))
 
-export const addDeck = title => AsyncStorage
-    .mergeItems(DECKS_ASYNC_STORAGE_KEY, JSON.stringify({ [title]: { title: title, questions: [] } }))
-    .then(response => { decks: JSON.parse(response) })
+export const addDeck = async ({ title }) => {
+    await AsyncStorage.mergeItem(DECKS_ASYNC_STORAGE_KEY, JSON.stringify({ [title]: { title, questionCount: 0 }}))
+    return getDecks()
+}
 
-export const addQuestion = async (title, id, question, answer) => ({
-    decks: JSON.parse(await AsyncStorage.mergeItems(DECKS_ASYNC_STORAGE_KEY, JSON.stringify({ [title]: { questions: [id] } }))),
-    questions: JSON.parse(await AsyncStorage.mergeItems(CARDS_ASYNC_STORAGE_KEY, JSON.stringify({ [id]: { id, question, answer } }))),
-})
+export const addQuestion = async ({ deck, id, question, answer }) => {
+    const currentDecks = await getDecks()
+    await AsyncStorage.mergeItem(DECKS_ASYNC_STORAGE_KEY,
+        JSON.stringify({ [deck]: { questionCount: currentDecks.decks[deck].questionCount + 1 } }))
+    await AsyncStorage.mergeItem(CARDS_ASYNC_STORAGE_KEY, JSON.stringify({ [id]: { id, question, answer, deck } }))
+    const [[, decks], [, questions]] = await AsyncStorage.multiGet([DECKS_ASYNC_STORAGE_KEY, CARDS_ASYNC_STORAGE_KEY])
+    return { decks: JSON.parse(decks), questions: JSON.parse(questions) }
+}

@@ -8,7 +8,7 @@ import api from './middleware/api'
 const configureStore = preloadedState => createStore(
     rootReducer,
     preloadedState,
-    applyMiddleware(thunk, api, logger)
+    applyMiddleware(thunk, api)
 )
 
 export default configureStore

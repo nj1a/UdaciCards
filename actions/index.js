@@ -33,16 +33,18 @@ export const ADD_DECK_REQUEST = 'ADD_DECK_REQUEST'
 export const ADD_DECK_SUCCESS = 'ADD_DECK_SUCCESS'
 export const ADD_DECK_FAILURE = 'ADD_DECK_FAILURE'
 
-export const addDeck = () => dispatch => dispatch({
+export const addDeck = title => dispatch => dispatch({
     types: [ADD_DECK_REQUEST, ADD_DECK_SUCCESS, ADD_DECK_FAILURE],
     call: api.addDeck,
+    payload: { title },
 })
 
 export const ADD_CARD_REQUEST = 'ADD_CARD_REQUEST'
 export const ADD_CARD_SUCCESS = 'ADD_CARD_SUCCESS'
 export const ADD_CARD_FAILURE = 'ADD_CARD_FAILURE'
 
-export const addQuestion = () => dispatch => dispatch({
+export const addQuestion = (deck, id, question, answer) => dispatch => dispatch({
     types: [ADD_CARD_REQUEST, ADD_CARD_SUCCESS, ADD_CARD_FAILURE],
     call: api.addQuestion,
+    payload: { deck, id, question, answer },
 })

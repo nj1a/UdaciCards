@@ -1,17 +1,87 @@
 import React, { Component } from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, StatusBar, Text, View } from 'react-native'
 import { Provider } from 'react-redux'
+import { Platform } from 'react-native'
+import { TabNavigator, StackNavigator } from 'react-navigation'
+import { Constants } from 'expo'
+import { FontAwesome, Ionicons } from '@expo/vector-icons'
 
 import configureStore from './configureStore'
+import { white, red } from './utils/colours'
+import DecksView from './containers/DecksView'
+import AddDeckView from './containers/AddDeckView'
+import AddQuestionView from './containers/AddQuestionView'
+
+const Tabs = TabNavigator(
+    {
+        DecksView: {
+            screen: DecksView,
+            navigationOptions: {
+                tabBarLabel: 'Decks',
+                tabBarIcon: ({ tintColor }) => <FontAwesome name='plus-square' size={30} color={tintColor} />
+            },
+        },
+        AddDeckView: {
+            screen: AddDeckView,
+            navigationOptions: {
+                tabBarLabel: 'Add A Deck',
+                tabBarIcon: ({ tintColor }) => <FontAwesome name='plus-square' size={30} color={tintColor} />
+            },
+        },
+        AddQuestionView: {
+            screen: AddQuestionView,
+            navigationOptions: {
+                tabBarLabel: 'Add A Question',
+                tabBarIcon: ({ tintColor }) => <Ionicons name='ios-speedometer' size={30} color={tintColor} />
+            }
+        }
+    },
+    {
+        navigationOptions: {
+            header: null
+        },
+        tabBarOptions: {
+            activeTintColor: Platform.OS === 'ios' ? red : white,
+            style: {
+                height: 56,
+                backgroundColor: Platform.OS === 'ios' ? white : red,
+                shadowColor: 'rgba(0, 0, 0, 0.24)',
+                shadowOffset: {
+                    width: 0,
+                    height: 3
+                },
+                shadowRadius: 6,
+                shadowOpacity: 1
+            }
+        }
+    }
+)
+
+export const MainNavigator = StackNavigator({
+    Home: {
+        screen: Tabs,
+    },
+    // DecksView: {
+    //     screen: DecksView,
+    //     navigationOptions: {
+    //         headerTintColor: white,
+    //         headerStyle: {
+    //             backgroundColor: red,
+    //         }
+    //     }
+    // }
+})
+
 
 export default class App extends Component {
     render() {
         return (
             <Provider store={configureStore()}>
                 <View style={styles.container}>
-                    <Text>Open up App.js to start working on your app!</Text>
-                    <Text>Changes you make will automatically reload.</Text>
-                    <Text>Shake your phone to open the developer menu.</Text>
+                    <View style={{ backgroundColor: red, height: Constants.statusBarHeight }}>
+                        <StatusBar translucent barStyle="light-content" />
+                    </View>
+                    <MainNavigator />
                 </View>
             </Provider>
         )
@@ -21,8 +91,5 @@ export default class App extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff',
-        alignItems: 'center',
-        justifyContent: 'center',
     },
 })

@@ -16,7 +16,8 @@ export default store => next => async ({ types, call, payload = {}, shouldCall =
     next({ payload, type: requestType, isLoading: true, })
 
     try {
-        next({ payload, type: successType, response: await call(payload), isLoading: false, })
+        const normalizedResult = { entities: await call(payload) }
+        next({ payload, type: successType, response: normalizedResult, isLoading: false, })
     } catch (error) {
         next({ payload, type: failureType, error: error.message || 'Something bad happened', isLoading: false, })
     }
