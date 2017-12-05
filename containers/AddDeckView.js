@@ -11,15 +11,15 @@ class AddDeckView extends Component {
         titleBorderWidth: 0,
     }
 
-    handleInputChange = input => value => {
+    _handleInputChange = input => value => {
         this.setState({ [input]: value })
     }
 
-    handleTitleOnFocus = () => {
+    _handleTitleOnFocus = () => {
         this.setState({ titleBorderWidth: 1, })
     }
 
-    handleTitleOnBlur = () => {
+    _handleTitleOnBlur = () => {
         this.setState({ titleBorderWidth: 0, })
     }
 
@@ -37,8 +37,8 @@ class AddDeckView extends Component {
                 <KeyboardAvoidingView behavior='padding' style={styles.container}>
                     <TextInput placeholder='Title of you new deck (32 characters)' placeholderColor={gray} maxLength={32}
                         style={[{ borderWidth: titleBorderWidth }, styles.input]} value={titleInput}
-                        onChangeText={this.handleInputChange('titleInput')} onFocus={this.handleTitleOnFocus}
-                        onBlur={this.handleTitleOnBlur}
+                        onChangeText={this._handleInputChange('titleInput')} onFocus={this._handleTitleOnFocus}
+                        onBlur={this._handleTitleOnBlur}
                     />
                     <Button onPress={this._onSubmit} title='I want to add it now' color={red} />
                 </KeyboardAvoidingView>

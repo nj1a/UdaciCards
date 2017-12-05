@@ -1,10 +1,8 @@
 import React, { Component } from 'react'
-import { StyleSheet, StatusBar, Text, View } from 'react-native'
+import { StyleSheet, Text, View, StatusBar } from 'react-native'
 import { Provider } from 'react-redux'
-import { Platform } from 'react-native'
 import { StackNavigator } from 'react-navigation'
 import { Constants } from 'expo'
-import { FontAwesome, Ionicons } from '@expo/vector-icons'
 
 import configureStore from './configureStore'
 import { white, red } from './utils/colours'
@@ -22,7 +20,7 @@ export const MainNavigator = StackNavigator({
             headerStyle: {
                 backgroundColor: red,
             },
-            title: 'UdaciCards',
+            title: 'Home',
         },
     },
     DeckView: {
@@ -64,23 +62,21 @@ export const MainNavigator = StackNavigator({
     }
 })
 
-export default class App extends Component {
-    render() {
-        return (
-            <Provider store={configureStore()}>
-                <View style={styles.container}>
-                    <View style={{ backgroundColor: red, height: Constants.statusBarHeight }}>
-                        <StatusBar translucent barStyle="light-content" />
-                    </View>
-                    <MainNavigator />
-                </View>
-            </Provider>
-        )
-    }
-}
+const App = () => (
+    <Provider store={configureStore()}>
+        <View style={styles.container}>
+            <View style={{ backgroundColor: red, height: Constants.statusBarHeight }}>
+                <StatusBar translucent barStyle="light-content" />
+            </View>
+            <MainNavigator />
+        </View>
+    </Provider>
+)
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
     },
 })
+
+export default App

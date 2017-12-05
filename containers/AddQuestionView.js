@@ -18,15 +18,15 @@ class AddQuestionView extends Component {
         answerBorderWidth: 0,
     }
 
-    handleInputChange = input => value => {
+    _handleInputChange = input => value => {
         this.setState({ [input]: value })
     }
 
-    handleQuestionOnFocus = () => {
+    _handleQuestionOnFocus = () => {
         this.setState({ questionBorderWidth: 1, answerBorderWidth: 0 })
     }
 
-    handleAnswerOnFocus = () => {
+    _handleAnswerOnFocus = () => {
         this.setState({ questionBorderWidth: 0, answerBorderWidth: 1 })
     }
 
@@ -44,12 +44,12 @@ class AddQuestionView extends Component {
                 <KeyboardAvoidingView behavior='padding' style={styles.container}>
                     <TextInput placeholder='Question (140 characters)' placeholderColor={gray} multiline={true} maxLength={140}
                         style={[{ borderWidth: questionBorderWidth }, styles.input]} value={questionInput}
-                        onChangeText={this.handleInputChange('questionInput')} onFocus={this.handleQuestionOnFocus}
-                        onBlur={this.handleAnswerOnFocus}
+                        onChangeText={this._handleInputChange('questionInput')} onFocus={this._handleQuestionOnFocus}
+                        onBlur={this._handleAnswerOnFocus}
                     />
                     <TextInput placeholder='Answer (140 characters)' placeholderColor={gray} multiline={true} maxLength={140}
                         style={[{ borderWidth: answerBorderWidth }, styles.input]} value={answerInput}
-                        onChangeText={this.handleInputChange('answerInput')} onFocus={this.handleAnswerOnFocus}
+                        onChangeText={this._handleInputChange('answerInput')} onFocus={this._handleAnswerOnFocus}
                         onBlur={this.handleQuestionOnFocus}
                     />
                     <Button onPress={this._onSubmit} title='I want to add it now' color={red} />

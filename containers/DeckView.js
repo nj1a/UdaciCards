@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { StyleSheet, Text, View, Platform, Button } from 'react-native'
 import { connect } from 'react-redux'
 
-import { getDecks, addDeck, addQuestion } from '../actions/index'
 import { gray, white, red } from '../utils/colours'
 
 class DeckView extends Component {
@@ -22,11 +21,11 @@ class DeckView extends Component {
                     <View style={{ marginTop: 30 }}>
                         <Button color={red} title='Add Card'
                             onPress={() => navigation.navigate('AddQuestionView', { deckTitle: deck.title })} />
-                        <Button color={red} title='Start Quiz'
-                            onPress={() => navigation.navigate('QuizView', { deckTitle: deck.title })} />
+                        {<Button color={red} title='Start Quiz' disabled={!deck.questionCount}
+                            onPress={() => navigation.navigate('QuizView', { deckTitle: deck.title })} />}
                     </View>
                 </View>
-            </View>    
+            </View>
         )
     }
 }
@@ -34,7 +33,7 @@ class DeckView extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: 'center',
+        marginTop: 50,
     },
     item: {
         backgroundColor: white,

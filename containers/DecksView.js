@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
-import { StyleSheet, Text, View, Platform, TouchableOpacity, Button } from 'react-native'
+import { StyleSheet, Text, View, Platform, TouchableOpacity, Button, AsyncStorage, FlatList } from 'react-native'
 import { connect } from 'react-redux'
 import uuidv4 from 'uuid/v4'
-import { AsyncStorage, FlatList } from 'react-native'
 
 import { getDecks, addDeck, addQuestion } from '../actions/index'
 import { gray, white } from '../utils/colours'
@@ -14,13 +13,16 @@ class DecksView extends Component {
     })
 
     async componentDidMount() {
-        await AsyncStorage.clear()
+        if (await AsyncStorage.getAllKeys()) {
+            AsyncStorage.clear()
+        }
         await this.props.getDecks()
-        await this.props.addDeck('first')
-        await this.props.addDeck('second')
-        await this.props.addQuestion('first', uuidv4(), 'q1', 'a1')
-        this.props.addQuestion('first', uuidv4(), 'q2', 'a2')
+        await this.props.addDeck('First Deck')
+        await this.props.addDeck('Second Deck')
+        await this.props.addQuestion('First Deck', uuidv4(), 'How many states are there in the U.S.?', '50')
+        this.props.addQuestion('Second Deck', uuidv4(), 'How many provinces are there in Canada?', '10')
     }
+
     _renderItem = ({ item }) =>
         <TouchableOpacity onPress={() => this.props.navigation.navigate('DeckView', { title: item.title })}>  
             <View style={styles.item}>
@@ -30,7 +32,7 @@ class DecksView extends Component {
         </TouchableOpacity>
 
     render() {
-        const { decks, questions } = this.props
+        const { decks } = this.props
         return (
             <View style={styles.container}>
                 <FlatList data={decks} keyExtractor={item => item.title} renderItem={this._renderItem} />
@@ -61,9 +63,8 @@ const styles = StyleSheet.create({
     }
 })
 
-const mapStateToProps = ({ entities: { decks, questions } }) => ({
+const mapStateToProps = ({ entities: { decks } }) => ({
     decks: Object.values(decks),
-    questions: Object.values(questions),
 })
 
 export default connect(mapStateToProps, {

@@ -13,6 +13,7 @@ import { AsyncStorage } from 'react-native'
  *          id: string
  *          question: string
  *          answer: string
+ *          deck: string
  *      }
  *  }
  */
