@@ -11,7 +11,7 @@ class DeckView extends Component {
     })
 
     render() {
-        const { deck } = this.props
+        const { deck, navigation } = this.props
         return (
             <View style={styles.container}>
                 <View style={styles.item}>
@@ -21,8 +21,9 @@ class DeckView extends Component {
                     </Text>
                     <View style={{ marginTop: 30 }}>
                         <Button color={red} title='Add Card'
-                            onPress={() => this.props.navigation.navigate('AddQuestionView', { deckTitle: deck.title })} />
-                        <Button color={red} title='Start Quiz' />
+                            onPress={() => navigation.navigate('AddQuestionView', { deckTitle: deck.title })} />
+                        <Button color={red} title='Start Quiz'
+                            onPress={() => navigation.navigate('QuizView', { deckTitle: deck.title })} />
                     </View>
                 </View>
             </View>    

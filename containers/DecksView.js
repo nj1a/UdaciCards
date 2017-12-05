@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { StyleSheet, Text, View, Platform, TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, View, Platform, TouchableOpacity, Button } from 'react-native'
 import { connect } from 'react-redux'
 import uuidv4 from 'uuid/v4'
 import { AsyncStorage, FlatList } from 'react-native'
@@ -8,6 +8,11 @@ import { getDecks, addDeck, addQuestion } from '../actions/index'
 import { gray, white } from '../utils/colours'
 
 class DecksView extends Component {
+    static navigationOptions = ({ navigation }) => ({
+        headerRight: <Button title="Add Deck" color={white}
+            onPress={() => navigation.navigate('AddDeckView')} />
+    })
+
     async componentDidMount() {
         await AsyncStorage.clear()
         await this.props.getDecks()
