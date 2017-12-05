@@ -9,6 +9,7 @@ import { FontAwesome, Ionicons } from '@expo/vector-icons'
 import configureStore from './configureStore'
 import { white, red } from './utils/colours'
 import DecksView from './containers/DecksView'
+import DeckView from './containers/DeckView'
 import AddDeckView from './containers/AddDeckView'
 import AddQuestionView from './containers/AddQuestionView'
 
@@ -24,17 +25,10 @@ const Tabs = TabNavigator(
         AddDeckView: {
             screen: AddDeckView,
             navigationOptions: {
-                tabBarLabel: 'Add A Deck',
+                tabBarLabel: 'Add Deck',
                 tabBarIcon: ({ tintColor }) => <FontAwesome name='plus-square' size={30} color={tintColor} />
             },
         },
-        AddQuestionView: {
-            screen: AddQuestionView,
-            navigationOptions: {
-                tabBarLabel: 'Add A Question',
-                tabBarIcon: ({ tintColor }) => <Ionicons name='ios-speedometer' size={30} color={tintColor} />
-            }
-        }
     },
     {
         navigationOptions: {
@@ -61,15 +55,24 @@ export const MainNavigator = StackNavigator({
     Home: {
         screen: Tabs,
     },
-    // DecksView: {
-    //     screen: DecksView,
-    //     navigationOptions: {
-    //         headerTintColor: white,
-    //         headerStyle: {
-    //             backgroundColor: red,
-    //         }
-    //     }
-    // }
+    DeckView: {
+        screen: DeckView,
+        navigationOptions: {
+            headerTintColor: white,
+            headerStyle: {
+                backgroundColor: red,
+            }
+        }
+    },
+    AddQuestionView: {
+        screen: AddQuestionView,
+        navigationOptions: {
+            headerTintColor: white,
+            headerStyle: {
+                backgroundColor: red,
+            }
+        }
+    }
 })
 
 
