@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
-import { StyleSheet, Text, View, Platform, TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, View, Platform, Button } from 'react-native'
 import { connect } from 'react-redux'
 
 import { getDecks, addDeck, addQuestion } from '../actions/index'
-import { gray, white } from '../utils/colours'
+import { gray, white, red } from '../utils/colours'
 
 class DeckView extends Component {
     static navigationOptions = ({ navigation }) => ({
@@ -13,19 +13,19 @@ class DeckView extends Component {
     render() {
         const { deck } = this.props
         return (
-            <View style={styles.item}>
-                <Text style={[styles.centreText, { fontSize: 40 }]}>{deck.title}</Text>
-                <Text style={[styles.centreText, { fontSize: 30, color: gray }]}>
-                    {`${deck.questionCount} card${deck.questionCount < 2 ? '' : 's'}`}
-                </Text>
-                <TouchableOpacity style={{ marginTop: 30 }}
-                    onPress={() => this.props.navigation.navigate('AddQuestionView', { deckTitle: deck.title })}>
-                    <Text>Add Card</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={{ marginTop: 30 }}>
-                    <Text>Start Quiz</Text>
-                </TouchableOpacity>
-            </View>
+            <View style={styles.container}>
+                <View style={styles.item}>
+                    <Text style={[styles.centreText, { fontSize: 40 }]}>{deck.title}</Text>
+                    <Text style={[styles.centreText, { fontSize: 30, color: gray }]}>
+                        {`${deck.questionCount} card${deck.questionCount < 2 ? '' : 's'}`}
+                    </Text>
+                    <View style={{ marginTop: 30 }}>
+                        <Button color={red} title='Add Card'
+                            onPress={() => this.props.navigation.navigate('AddQuestionView', { deckTitle: deck.title })} />
+                        <Button color={red} title='Start Quiz' />
+                    </View>
+                </View>
+            </View>    
         )
     }
 }
@@ -33,13 +33,13 @@ class DeckView extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        justifyContent: 'center',
     },
     item: {
         backgroundColor: white,
         padding: 20,
         marginLeft: 10,
         marginRight: 10,
-        marginTop: 15,
         borderRadius: Platform.OS === 'ios' ? 10 : 2,
         shadowRadius: 3,
         shadowOpacity: 0.8,

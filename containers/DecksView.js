@@ -18,9 +18,9 @@ class DecksView extends Component {
     }
     _renderItem = ({ item }) =>
         <TouchableOpacity onPress={() => this.props.navigation.navigate('DeckView', { title: item.title })}>  
-        <View style={styles.item}>
-            <Text style={[styles.centreText, { fontSize: 40 }]}>{item.title}</Text>
-            <Text style={[styles.centreText, { fontSize: 30, color: gray }]}>{`${item.questionCount} card${item.questionCount < 2 ? '' : 's'}`}</Text>
+            <View style={styles.item}>
+                <Text style={[styles.centreText, { fontSize: 40 }]}>{item.title}</Text>
+                <Text style={[styles.centreText, { fontSize: 30, color: gray }]}>{`${item.questionCount} card${item.questionCount < 2 ? '' : 's'}`}</Text>
             </View>
         </TouchableOpacity>
 
@@ -37,6 +37,7 @@ class DecksView extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        marginTop: 30,
     },
     item: {
         backgroundColor: white,
