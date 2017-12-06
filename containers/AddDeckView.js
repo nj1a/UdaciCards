@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { StyleSheet, TextInput, Platform, Button, Keyboard, KeyboardAvoidingView, TouchableWithoutFeedback } from 'react-native'
+import { StyleSheet, TextInput, Platform, Button, KeyboardAvoidingView } from 'react-native'
 import { connect } from 'react-redux'
 
 import { addDeck } from '../actions/index'
@@ -33,16 +33,14 @@ class AddDeckView extends Component {
     render() {
         const { titleInput, titleBorderWidth } = this.state
         return (
-            <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-                <KeyboardAvoidingView behavior='padding' style={styles.container}>
-                    <TextInput placeholder='Title of you new deck (32 characters)' placeholderColor={gray} maxLength={32}
-                        style={[{ borderWidth: titleBorderWidth }, styles.input]} value={titleInput}
-                        onChangeText={this._handleInputChange('titleInput')} onFocus={this._handleTitleOnFocus}
-                        onBlur={this._handleTitleOnBlur}
-                    />
-                    <Button onPress={this._onSubmit} title='I want to add it now' color={red} />
-                </KeyboardAvoidingView>
-            </TouchableWithoutFeedback>
+            <KeyboardAvoidingView behavior='position' style={styles.container}>
+                <TextInput placeholder='Title of you new deck (32 characters)' placeholderColor={gray} maxLength={32}
+                    style={[{ borderWidth: titleBorderWidth }, styles.input]} value={titleInput}
+                    onChangeText={this._handleInputChange('titleInput')} onFocus={this._handleTitleOnFocus}
+                    onBlur={this._handleTitleOnBlur} autoFocus
+                />
+                <Button onPress={this._onSubmit} title='I want to add it now' color={red} />
+            </KeyboardAvoidingView>
         )
     }
 }
@@ -50,17 +48,16 @@ class AddDeckView extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        marginTop: 50,
+        justifyContent: 'center',
     },
     input: {
-        height: 100,
+        height: 30,
+        fontSize: 15,
         backgroundColor: white,
-        padding: 20,
-        marginLeft: 20,
-        marginRight: 20,
-        marginTop: 15,
+        margin: 20,
+        padding: 5,
         borderColor: red,
-        borderRadius: Platform.OS === 'ios' ? 10 : 2,
+        borderRadius: Platform.OS === 'ios' ? 4 : 2,
         shadowRadius: 3,
         shadowOpacity: 0.8,
         shadowColor: 'rgba(0, 0, 0, 0.24)',

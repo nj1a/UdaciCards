@@ -19,7 +19,7 @@ class DecksView extends Component {
         }
         await this.props.getDecks()
         await this.props.addDeck('First Deck')
-        await this.props.addDeck('Second Deck')
+        this.props.addDeck('Second Deck')
         await this.props.addQuestion('First Deck', uuidv4(), 'How many states are there in the U.S.?', '50')
         this.props.addQuestion('First Deck', uuidv4(), 'How many provinces are there in Canada?', '10')
     }

@@ -16,8 +16,8 @@ class DeckView extends Component {
         return (
             <View style={styles.container}>
                 <View style={styles.item}>
-                    <Text style={[styles.centreText, { fontSize: 40 }]}>{deck.title}</Text>
-                    <Text style={[styles.centreText, { fontSize: 30, color: gray }]}>
+                    <Text style={[styles.centreText, { fontSize: 30 }]}>{deck.title}</Text>
+                    <Text style={[styles.centreText, { fontSize: 20, color: gray }]}>
                         {`${deck.questionCount} card${deck.questionCount < 2 ? '' : 's'}`}
                     </Text>
                     <View style={{ marginTop: 30 }}>

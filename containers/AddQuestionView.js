@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { StyleSheet, TextInput, Platform, Keyboard, KeyboardAvoidingView, Button, TouchableWithoutFeedback } from 'react-native'
+import { StyleSheet, TextInput, Platform, Button, KeyboardAvoidingView } from 'react-native'
 import { connect } from 'react-redux'
 import uuidv4 from 'uuid/v4'
 
@@ -40,21 +40,19 @@ class AddQuestionView extends Component {
     render() {
         const { questionInput, answerInput, questionBorderWidth, answerBorderWidth } = this.state
         return (
-            <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-                <KeyboardAvoidingView behavior='padding' style={styles.container}>
-                    <TextInput placeholder='Question (140 characters)' placeholderColor={gray} multiline={true} maxLength={140}
-                        style={[{ borderWidth: questionBorderWidth }, styles.input]} value={questionInput}
-                        onChangeText={this._handleInputChange('questionInput')} onFocus={this._handleQuestionOnFocus}
-                        onBlur={this._handleAnswerOnFocus}
-                    />
-                    <TextInput placeholder='Answer (140 characters)' placeholderColor={gray} multiline={true} maxLength={140}
-                        style={[{ borderWidth: answerBorderWidth }, styles.input]} value={answerInput}
-                        onChangeText={this._handleInputChange('answerInput')} onFocus={this._handleAnswerOnFocus}
-                        onBlur={this.handleQuestionOnFocus}
-                    />
-                    <Button onPress={this._onSubmit} title='I want to add it now' color={red} />
-                </KeyboardAvoidingView>
-            </TouchableWithoutFeedback>
+            <KeyboardAvoidingView style={styles.container} >
+                <TextInput placeholder='Question (120 characters)' placeholderColor={gray} maxLength={120}
+                    style={[{ borderWidth: questionBorderWidth }, styles.input]} value={questionInput}
+                    onChangeText={this._handleInputChange('questionInput')} onFocus={this._handleQuestionOnFocus}
+                    onBlur={this._handleAnswerOnFocus} multiline blurOnSubmit autoFocus
+                />
+                <TextInput placeholder='Answer (120 characters)' placeholderColor={gray} maxLength={120}
+                    style={[{ borderWidth: answerBorderWidth }, styles.input]} value={answerInput}
+                    onChangeText={this._handleInputChange('answerInput')} onFocus={this._handleAnswerOnFocus}
+                    onBlur={this.handleQuestionOnFocus} multiline blurOnSubmit
+                />
+                <Button onPress={this._onSubmit} title='I want to add it now' color={red} />
+            </KeyboardAvoidingView>
         )
     }
 }
@@ -62,17 +60,16 @@ class AddQuestionView extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        marginTop: 50,
+        marginTop: 10,
     },
     input: {
-        height: 100,
+        height: 70,
+        fontSize: 15,
         backgroundColor: white,
-        padding: 20,
-        marginLeft: 20,
-        marginRight: 20,
-        marginTop: 15,
+        padding: 5,
+        margin: 10,
         borderColor: red,
-        borderRadius: Platform.OS === 'ios' ? 10 : 2,
+        borderRadius: Platform.OS === 'ios' ? 4 : 2,
         shadowRadius: 3,
         shadowOpacity: 0.8,
         shadowColor: 'rgba(0, 0, 0, 0.24)',
