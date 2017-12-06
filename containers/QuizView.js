@@ -47,6 +47,10 @@ class QuizView extends Component {
             return (
                 <View style={[{ marginLeft: 10, marginRight: 10, }, styles.container]}>
                     <Text style={{ fontSize: 20, textAlign: 'center' }}>You answered {correctCount / questionCount * 100}% of questions correctly.</Text>
+                    <Button title='Start over' color={red}
+                        onPress={() => navigation.navigate('QuizView', { deckTitle: navigation.state.params.deckTitle })} />
+                    <Button title='Back to deck' color={red}
+                        onPress={() => navigation.navigate('DeckView', { title: navigation.state.params.deckTitle })} />
                 </View>
             )
         }

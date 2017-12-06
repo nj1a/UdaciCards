@@ -6,7 +6,9 @@ import { gray, white, red } from '../utils/colours'
 
 class DeckView extends Component {
     static navigationOptions = ({ navigation }) => ({
-        title: navigation.state.params.title
+        title: navigation.state.params.title,
+        headerLeft: <Button title="Home" color={white}
+            onPress={() => navigation.navigate('HomeView')} />
     })
 
     render() {

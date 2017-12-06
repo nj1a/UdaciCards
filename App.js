@@ -13,7 +13,7 @@ import AddQuestionView from './containers/AddQuestionView'
 import QuizView from './containers/QuizView'
 
 export const MainNavigator = StackNavigator({
-    Home: {
+    HomeView: {
         screen: DecksView,
         navigationOptions: {
             headerTintColor: white,

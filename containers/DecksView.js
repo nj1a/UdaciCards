@@ -9,7 +9,8 @@ import { gray, white } from '../utils/colours'
 class DecksView extends Component {
     static navigationOptions = ({ navigation }) => ({
         headerRight: <Button title="Add Deck" color={white}
-            onPress={() => navigation.navigate('AddDeckView')} />
+            onPress={() => navigation.navigate('AddDeckView')} />,
+        headerLeft: null,
     })
 
     async componentDidMount() {
@@ -20,7 +21,7 @@ class DecksView extends Component {
         await this.props.addDeck('First Deck')
         await this.props.addDeck('Second Deck')
         await this.props.addQuestion('First Deck', uuidv4(), 'How many states are there in the U.S.?', '50')
-        this.props.addQuestion('Second Deck', uuidv4(), 'How many provinces are there in Canada?', '10')
+        this.props.addQuestion('First Deck', uuidv4(), 'How many provinces are there in Canada?', '10')
     }
 
     _renderItem = ({ item }) =>
