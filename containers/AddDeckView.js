@@ -24,11 +24,11 @@ class AddDeckView extends Component {
         this.setState({ titleBorderWidth: 0, })
     }
 
-    _onSubmit = () => {
+    _onSubmit = async () => {
         const { titleInput, } = this.state
         const { navigation, addDeck } = this.props
-        addDeck(titleInput)
-        navigation.goBack()
+        await addDeck(titleInput)
+        navigation.navigate('DeckView', { title: titleInput })
     }
     
     render() {
