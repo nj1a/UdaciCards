@@ -10,4 +10,6 @@ Most of the manual testing was performed on iOS (with expo), but some was done w
 
 ## Issues
 
-The TextInputs in the AddDeckView and AddQuestionView do not respond correctly (move up) when a keyboard shows up. The currecnt workaround is to put TextInputs at the top and control their heights so the keyboard doesn't have to push TextInputs upwards. I also tried `react-native-keyboard-aware-scrollview` but it didn't seem to work well with multiline TextInputs.
+- The TextInputs in the AddDeckView and AddQuestionView do not respond correctly (move up) when a keyboard shows up. The currecnt workaround is to put TextInputs at the top and control their heights so the keyboard doesn't have to push TextInputs upwards. I also tried `react-native-keyboard-aware-scrollview` but it didn't seem to work well with multiline TextInputs.
+
+- The local notification seems unstable, and sometimes it doesn't show up even in Android.
