@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
-import { StyleSheet, TextInput, Platform, Button, KeyboardAvoidingView } from 'react-native'
+import { TextInput, Button } from 'react-native'
 import { connect } from 'react-redux'
 import uuidv4 from 'uuid/v4'
 
+import { ContainerView, viewStyles } from '../components/Views'
 import { addQuestion } from '../actions/index'
 import { gray, white, red } from '../utils/colours'
 
@@ -40,42 +41,26 @@ class AddQuestionView extends Component {
     render() {
         const { questionInput, answerInput, questionBorderWidth, answerBorderWidth } = this.state
         return (
-            <KeyboardAvoidingView style={styles.container} >
+            <ContainerView>
                 <TextInput placeholder='Question (120 characters)' placeholderColor={gray} maxLength={120}
-                    style={[{ borderWidth: questionBorderWidth }, styles.input]} value={questionInput}
+                    style={[{
+                        borderWidth: questionBorderWidth, fontSize: 15, height: 70,
+                    }, viewStyles.card]} value={questionInput}
                     onChangeText={this._handleInputChange('questionInput')} onFocus={this._handleQuestionOnFocus}
                     onBlur={this._handleAnswerOnFocus} multiline blurOnSubmit autoFocus
                 />
                 <TextInput placeholder='Answer (120 characters)' placeholderColor={gray} maxLength={120}
-                    style={[{ borderWidth: answerBorderWidth }, styles.input]} value={answerInput}
+                    style={[{
+                        borderWidth: answerBorderWidth, fontSize: 15, height: 70,
+                    }, viewStyles.card]} value={answerInput}
                     onChangeText={this._handleInputChange('answerInput')} onFocus={this._handleAnswerOnFocus}
                     onBlur={this.handleQuestionOnFocus} multiline blurOnSubmit
                 />
                 <Button onPress={this._onSubmit} title='I want to add it now' color={red} />
-            </KeyboardAvoidingView>
+            </ContainerView>
         )
     }
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        marginTop: 10,
-    },
-    input: {
-        height: 70,
-        fontSize: 15,
-        backgroundColor: white,
-        padding: 5,
-        margin: 10,
-        borderColor: red,
-        borderRadius: Platform.OS === 'ios' ? 4 : 2,
-        shadowRadius: 3,
-        shadowOpacity: 0.8,
-        shadowColor: 'rgba(0, 0, 0, 0.24)',
-        shadowOffset: { width: 0, height: 3 },
-    }
-})
 
 export default connect(null, {
     addQuestion,

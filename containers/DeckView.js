@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
-import { StyleSheet, Text, View, Platform, Button } from 'react-native'
+import { StyleSheet, Text, View, Button } from 'react-native'
 import { connect } from 'react-redux'
 
+import { CardView, ContainerView } from '../components/Views'
 import { gray, white, red } from '../utils/colours'
 
 class DeckView extends Component {
@@ -14,8 +15,8 @@ class DeckView extends Component {
     render() {
         const { deck, navigation } = this.props
         return (
-            <View style={styles.container}>
-                <View style={styles.item}>
+            <ContainerView>
+                <CardView>
                     <Text style={[styles.centreText, { fontSize: 30 }]}>{deck.title}</Text>
                     <Text style={[styles.centreText, { fontSize: 20, color: gray }]}>
                         {`${deck.questionCount} card${deck.questionCount < 2 ? '' : 's'}`}
@@ -26,28 +27,13 @@ class DeckView extends Component {
                         {<Button color={red} title='Start Quiz' disabled={!deck.questionCount}
                             onPress={() => navigation.navigate('QuizView', { deckTitle: deck.title })} />}
                     </View>
-                </View>
-            </View>
+                </CardView>
+            </ContainerView>
         )
     }
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        marginTop: 50,
-    },
-    item: {
-        backgroundColor: white,
-        padding: 20,
-        marginLeft: 10,
-        marginRight: 10,
-        borderRadius: Platform.OS === 'ios' ? 10 : 2,
-        shadowRadius: 3,
-        shadowOpacity: 0.8,
-        shadowColor: 'rgba(0, 0, 0, 0.24)',
-        shadowOffset: { width: 0, height: 3 },
-    },
     centreText: {
         textAlign: 'center',
     }

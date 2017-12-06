@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
-import { StyleSheet, TextInput, Platform, Button, KeyboardAvoidingView } from 'react-native'
+import { TextInput, Button } from 'react-native'
 import { connect } from 'react-redux'
 
+import { ContainerView, viewStyles } from '../components/Views'
 import { addDeck } from '../actions/index'
 import { gray, white, red } from '../utils/colours'
 
@@ -33,37 +34,19 @@ class AddDeckView extends Component {
     render() {
         const { titleInput, titleBorderWidth } = this.state
         return (
-            <KeyboardAvoidingView behavior='position' style={styles.container}>
+            <ContainerView>
                 <TextInput placeholder='Title of you new deck (32 characters)' placeholderColor={gray} maxLength={32}
-                    style={[{ borderWidth: titleBorderWidth }, styles.input]} value={titleInput}
+                    style={[{
+                        borderWidth: titleBorderWidth, height: 30, fontSize: 15,
+                    }, viewStyles.card]} value={titleInput}
                     onChangeText={this._handleInputChange('titleInput')} onFocus={this._handleTitleOnFocus}
                     onBlur={this._handleTitleOnBlur} autoFocus
                 />
                 <Button onPress={this._onSubmit} title='I want to add it now' color={red} />
-            </KeyboardAvoidingView>
+            </ContainerView>
         )
     }
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: 'center',
-    },
-    input: {
-        height: 30,
-        fontSize: 15,
-        backgroundColor: white,
-        margin: 20,
-        padding: 5,
-        borderColor: red,
-        borderRadius: Platform.OS === 'ios' ? 4 : 2,
-        shadowRadius: 3,
-        shadowOpacity: 0.8,
-        shadowColor: 'rgba(0, 0, 0, 0.24)',
-        shadowOffset: { width: 0, height: 3 },
-    }
-})
 
 export default connect(null, {
     addDeck

@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
-import { StyleSheet, Text, View, Button, Platform, Switch } from 'react-native'
+import { Text, View, Button, Switch } from 'react-native'
 import { connect } from 'react-redux'
 
+import { CardView, ContainerView, viewStyles } from '../components/Views'
 import { gray, white, red, blue } from '../utils/colours'
 
 class QuizView extends Component {
@@ -35,7 +36,7 @@ class QuizView extends Component {
         // beginning of the quiz
         if (questionIndex === -1) {
             return (
-                <View style={[{ justifyContent: 'center', }, styles.container]}>
+                <View style={[{ justifyContent: 'center', }, viewStyles.container]}>
                     <Button title='I want to take the quiz now' color={red}
                         onPress={this._onUpdateTitle({ questionIndex: questionIndex + 1, questionCount, navigation })} />
                 </View >
@@ -45,7 +46,7 @@ class QuizView extends Component {
         // end of the quiz
         if (questionIndex === questionCount) {
             return (
-                <View style={[{ marginLeft: 10, marginRight: 10, }, styles.container]}>
+                <View style={[{ marginLeft: 10, marginRight: 10, }, viewStyles.container]}>
                     <Text style={{ fontSize: 20, textAlign: 'center' }}>You answered {correctCount / questionCount * 100}% of questions correctly.</Text>
                     <Button title='Start over' color={red}
                         onPress={() => navigation.navigate('QuizView', { deckTitle: navigation.state.params.deckTitle })} />
@@ -57,10 +58,10 @@ class QuizView extends Component {
 
         // during the quiz
         return (
-            <View style={styles.container}>
-                <View style={styles.item}>
+            <ContainerView>
+                <CardView>
                     <Text>{questions[questionIndex].question}</Text>
-                </View>
+                </CardView>
                 <View style={{ alignItems: 'center', margin: 20 , height: 100 }}>
                     <Text style={{ fontSize: 20, marginBottom: 10 }}>Show Answer</Text>    
                     <Switch onValueChange={this._onToggleShowAnswer} value={showAnswer}
@@ -73,30 +74,10 @@ class QuizView extends Component {
                     <Button title='Incorrect' color={red}
                         onPress={this._onUpdateTitle({ questionIndex: questionIndex + 1, questionCount, navigation })} />
                 </View>
-            </View>
+            </ContainerView>
         )
     }
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        marginTop: 30,
-        justifyContent: 'center',
-    },
-    item: {
-        backgroundColor: white,
-        padding: 20,
-        marginLeft: 10,
-        marginRight: 10,
-        marginTop: 15,
-        borderRadius: Platform.OS === 'ios' ? 10 : 2,
-        shadowRadius: 3,
-        shadowOpacity: 0.8,
-        shadowColor: 'rgba(0, 0, 0, 0.24)',
-        shadowOffset: { width: 0, height: 3 },
-    },
-})
 
 const mapStateToProps = ({ entities: { questions } }, { navigation }) => ({
     questions: Object.values(questions).filter(question => question.deck === navigation.state.params.deckTitle),
