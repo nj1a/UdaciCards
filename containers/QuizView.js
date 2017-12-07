@@ -31,7 +31,7 @@ class QuizView extends Component {
 
     render() {
         const { questionIndex, correctCount, showAnswer } = this.state
-        const { questions, navigation, setLocalNotification, clearLocalNotification } = this.props
+        const { questions, navigation } = this.props
         const questionCount = questions.length
 
         // beginning of the quiz
@@ -47,8 +47,8 @@ class QuizView extends Component {
         // end of the quiz
         if (questionIndex === questionCount) {
             // reset the local notification
-            setLocalNotification.then(clearLocalNotification)
-            
+            clearLocalNotification().then(setLocalNotification)
+
             return (
                 <View style={[{ marginLeft: 10, marginRight: 10, }, viewStyles.container]}>
                     <Text style={{ fontSize: 20, textAlign: 'center' }}>You answered {correctCount / questionCount * 100}% of questions correctly.</Text>
@@ -87,7 +87,4 @@ const mapStateToProps = ({ entities: { questions } }, { navigation }) => ({
     questions: Object.values(questions).filter(question => question.deck === navigation.state.params.deckTitle),
 })
 
-export default connect(mapStateToProps, {
-    setLocalNotification,
-    clearLocalNotification,
-})(QuizView)
+export default connect(mapStateToProps)(QuizView)
