@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, StatusBar } from 'react-native'
+import { View, StatusBar, AsyncStorage } from 'react-native'
 import { Provider } from 'react-redux'
 import { Constants } from 'expo'
 
@@ -9,6 +9,10 @@ import { setLocalNotification } from './utils/notifications'
 import { white, red } from './utils/colours'
 
 export default class App extends Component {
+    componentWillMount() {
+        AsyncStorage.clear()
+    }
+    
     componentDidMount() {
         setLocalNotification()
     }

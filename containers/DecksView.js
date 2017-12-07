@@ -15,14 +15,17 @@ class DecksView extends Component {
     })
 
     async componentDidMount() {
-        if (await AsyncStorage.getAllKeys()) {
-            AsyncStorage.clear()
+        const isLoaded = await AsyncStorage.getItem('isLoaded')
+        if (isLoaded === null) {
+            const { getDecks, addDeck, addQuestion } = this.props
+            await getDecks()
+            await addDeck('First Deck')
+            addDeck('Second Deck')
+            await addQuestion('First Deck', uuidv4(), 'How many states are there in the U.S.?', '50')
+            addQuestion('First Deck', uuidv4(), 'How many provinces are there in Canada?', '10')
+
+            AsyncStorage.setItem('isLoaded', 'true')
         }
-        await this.props.getDecks()
-        await this.props.addDeck('First Deck')
-        this.props.addDeck('Second Deck')
-        await this.props.addQuestion('First Deck', uuidv4(), 'How many states are there in the U.S.?', '50')
-        this.props.addQuestion('First Deck', uuidv4(), 'How many provinces are there in Canada?', '10')
     }
 
     _renderItem = ({ item }) =>
